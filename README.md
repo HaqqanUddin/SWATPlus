@@ -1,1 +1,3 @@
-# SWATPlus
+SWAT+ Model for Hydrological Modeling
+
+This repository contains the SWAT+ model developed to simulate hydrological processes in the Indiana River Watershed, located in Indiana State. The model utilizes high-resolution spatial and temporal data, including the Copernicus DEM for digital elevation modeling, SWAT+ inbuilt climate datasets, the SSURGO database for soil properties, and the NLCD for land use classification. The model provides comprehensive coverage of the watershed and supports daily, monthly, and yearly hydrological simulations. It enables detailed analysis of water budget components such as surface runoff, groundwater flow, and streamflow dynamics while incorporating precise land use and soil data for accurate modeling results.
