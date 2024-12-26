@@ -17,9 +17,9 @@ current_working_dir = os.getcwd()
 print(f"Current working directory: {current_working_dir}")
 
 # Load data from CSV files
-data_day_path = r'D:\D\Masters Courses\Thesis\Dera Bugti\New Project\Dera Bugti II\Scenarios\Default\TxtInOut\channel_sd_day.csv'
-data_yr_path = r'D:\D\Masters Courses\Thesis\Dera Bugti\New Project\Dera Bugti II\Scenarios\Default\TxtInOut\channel_sd_yr.csv'
-data_mon_path = r'D:\D\Masters Courses\Thesis\Dera Bugti\New Project\Dera Bugti II\Scenarios\Default\TxtInOut\channel_sd_mon.csv'
+data_day_path = r'D:\D\Abdullah Azzam\BHL SWAT+\SWAT\F23_1\Scenarios\Default\TxtInOut\channel_sd_day.csv'
+data_yr_path = r'D:\D\Abdullah Azzam\BHL SWAT+\SWAT\F23_1\Scenarios\Default\TxtInOut\channel_sd_yr.csv'
+data_mon_path = r'D:\D\Abdullah Azzam\BHL SWAT+\SWAT\F23_1\Scenarios\Default\TxtInOut\channel_sd_mon.csv'
 
 print(f"Loading data from:\n{data_day_path}\n{data_yr_path}\n{data_mon_path}")
 
@@ -83,7 +83,7 @@ selected_rows_yr = selected_rows_yr.iloc[:, 1:]
 selected_rows_mon = selected_rows_mon.iloc[:, 1:]
 
 # Define output Excel file name
-output_dir = r'D:\D\PhD\Github\Swat+ HSPF'
+output_dir = r'F:\E\Master courses\Github\Swat+ HSPF'
 output_excel_file = os.path.join(output_dir, f"Simulated_Flow_{channel_id}.xlsx")
 
 # Export data to a single Excel file with multiple sheets
@@ -100,8 +100,8 @@ except Exception as e:
     exit()
 
 # File paths
-obs_file = r"D:\D\PhD\Github\Swat+ HSPF\Observed_Flow_cha001.xlsx"
-sim_file = r"D:\D\PhD\Github\Swat+ HSPF\Simulated_Flow_cha001.xlsx"
+obs_file = r"F:\E\Master courses\Github\Swat+ HSPF\Observed_Flow_cha001.xlsx"
+sim_file = r"F:\E\Master courses\Github\Swat+ HSPF\Simulated_Flow_cha072.xlsx"
 
 # Load observed and simulated daily data
 observed_daily = pd.read_excel(obs_file, sheet_name="daily", usecols=[3])  # Assuming the 4th column contains observed flow
@@ -152,10 +152,11 @@ simulated_monthly.columns = ["Year", "Month", "Simulated Flow"]
 # Combine observed and simulated data for monthly data
 monthly_data = pd.concat([simulated_monthly, observed_monthly], axis=1)
 
-# Create a combined x-axis label as "Month-Year"
-monthly_data["Label"] = pd.to_datetime(
-    monthly_data["Year"].astype(str) + "-" + monthly_data["Month"].astype(str).str.zfill(2)
-)
+# Create a combined "Month-Year" label as a string (correctly formatted)
+monthly_data["Label"] = monthly_data["Month"].astype(str).str.zfill(2) + "-" + monthly_data["Year"].astype(str)
+
+# Ensure the 'Label' column is treated as a string, not a numerical value
+monthly_data["Label"] = monthly_data["Label"].astype(str)
 
 # Plot the data
 plt.figure(figsize=(14, 8))
@@ -186,8 +187,8 @@ plt.ylabel("Flows (cfs)", fontsize=11)
 
 # Adjust x-axis ticks to display Month-Year at an interval
 plt.xticks(
-    monthly_data["Label"][::12],  # Show every 6th month for better spacing
-    monthly_data["Label"][::12].dt.strftime("%b-%y"),  # Format as "Month-Year"
+    monthly_data["Label"][::12],  # Show every 12th month for better spacing (adjust as needed)
+    monthly_data["Label"][::12],  # Use the custom "Month-Year" label
     rotation=45,
     fontsize=12,
 )
